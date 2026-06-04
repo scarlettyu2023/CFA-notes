@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1.05 — Excess Purchase Price, Fair Value Option & Impairment</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #f7f5f0;
+  --ink: #1a1814;
+  --ink-soft: #4a4740;
+  --ink-muted: #8a8680;
+  --teal-dark: #085041;
+  --teal-mid: #0F6E56;
+  --teal-light: #E1F5EE;
+  --teal-border: #5DCAA5;
+  --amber-dark: #633806;
+  --amber-mid: #854F0B;
+  --amber-light: #FAEEDA;
+  --amber-border: #EF9F27;
+  --purple-dark: #3C3489;
+  --purple-light: #EEEDFE;
+  --purple-border: #AFA9EC;
+  --blue-dark: #0C447C;
+  --blue-light: #E6F1FB;
+  --blue-border: #85B7EB;
+  --gray-light: #F1EFE8;
+  --gray-border: #B4B2A9;
+  --gray-dark: #444441;
+  --rule: #d8d5ce;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  padding: 48px 32px 80px;
+  max-width: 900px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ── Header ── */
+.page-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 10px;
+}
+h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+.page-sub {
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* ── Section headers ── */
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 40px 0 16px;
+}
+.section-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-muted);
+  letter-spacing: 0.08em;
+  min-width: 28px;
+}
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+/* ── Box system ── */
+.box {
+  border-radius: 10px;
+  padding: 13px 16px;
+  border: 1px solid;
+}
+.box-title { font-size: 13px; font-weight: 500; line-height: 1.3; }
+.box-sub { font-size: 12px; margin-top: 4px; line-height: 1.5; }
+
+.teal  { background: var(--teal-light);   border-color: var(--teal-border); }
+.teal  .box-title { color: var(--teal-dark); }
+.teal  .box-sub   { color: var(--teal-mid); }
+
+.amber { background: var(--amber-light);  border-color: var(--amber-border); }
+.amber .box-title { color: var(--amber-dark); }
+.amber .box-sub   { color: var(--amber-mid); }
+
+.purple{ background: var(--purple-light); border-color: var(--purple-border); }
+.purple .box-title { color: var(--purple-dark); }
+.purple .box-sub   { color: #534AB7; }
+
+.blue  { background: var(--blue-light);   border-color: var(--blue-border); }
+.blue  .box-title { color: var(--blue-dark); }
+.blue  .box-sub   { color: #185FA5; }
+
+.gray  { background: var(--gray-light);   border-color: var(--gray-border); }
+.gray  .box-title { color: var(--gray-dark); }
+.gray  .box-sub   { color: #5F5E5A; }
+
+.banner {
+  border-radius: 10px; padding: 14px 18px;
+  background: var(--gray-light); border: 1px solid var(--gray-border);
+}
+.banner .box-title { color: var(--gray-dark); font-size: 13px; font-weight: 500; }
+.banner .box-sub   { color: #5F5E5A; font-size: 12px; margin-top: 5px; line-height: 1.6; }
+
+/* ── Grid layouts ── */
+.row { display: grid; gap: 10px; margin-bottom: 10px; }
+.col-2 { grid-template-columns: 1fr 1fr; }
+.col-3 { grid-template-columns: 1fr 1fr 1fr; }
+.col-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+/* ── Pipeline / flow ── */
+.pipeline { display: flex; flex-direction: column; align-items: flex-start; gap: 0; }
+.pipe-arrow {
+  width: 1px; height: 20px; background: var(--rule);
+  margin: 0 0 0 24px; position: relative;
+}
+.pipe-arrow::after {
+  content: ''; position: absolute; bottom: 0; left: -4px;
+  border-left: 5px solid transparent; border-right: 5px solid transparent;
+  border-top: 7px solid var(--rule);
+}
+.pipe-split { display: grid; gap: 10px; width: 100%; }
+.pipe-split-2 { grid-template-columns: 1fr 1fr; }
+
+.split-line {
+  display: flex; justify-content: space-around;
+  height: 20px; position: relative;
+  margin-bottom: 0;
+}
+.split-line::before {
+  content: ''; position: absolute;
+  top: 0; left: 25%; right: 25%; height: 1px;
+  background: var(--rule);
+}
+.split-line::after {
+  content: '';
+}
+.split-dot {
+  width: 1px; height: 100%; background: var(--rule);
+  position: relative;
+}
+.split-dot::after {
+  content: ''; position: absolute; bottom: 0; left: -4px;
+  border-left: 5px solid transparent; border-right: 5px solid transparent;
+  border-top: 7px solid var(--rule);
+}
+
+/* ── Tables ── */
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+th {
+  background: var(--gray-light); font-weight: 500;
+  padding: 9px 12px; text-align: left;
+  border: 0.5px solid var(--rule); color: var(--gray-dark);
+}
+td { padding: 8px 12px; border: 0.5px solid var(--rule); color: var(--ink-soft); vertical-align: top; }
+tr:nth-child(even) td { background: #faf9f6; }
+.total-row td { font-weight: 500; background: var(--teal-light) !important; color: var(--teal-dark); }
+.formula-mono { font-family: 'DM Mono', monospace; font-size: 12px; }
+
+/* ── Worked example card ── */
+.example-card {
+  border: 1px solid var(--rule);
+  border-radius: 12px; overflow: hidden;
+  margin-top: 10px;
+}
+.example-header {
+  background: var(--ink); color: var(--cream);
+  padding: 11px 18px;
+  display: flex; align-items: center; gap: 10px;
+}
+.example-label {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: #a0a090;
+}
+.example-name { font-size: 13px; font-weight: 500; }
+.example-body { padding: 18px; background: white; }
+
+/* ── Formula strip ── */
+.formula-strip {
+  background: var(--ink); color: var(--cream);
+  border-radius: 10px; padding: 16px 20px;
+  font-family: 'DM Mono', monospace; font-size: 13px;
+  line-height: 2.1; margin-top: 10px;
+}
+.formula-strip .op-plus  { color: #5DCAA5; }
+.formula-strip .op-minus { color: #F09595; }
+.formula-strip .op-eq    { color: var(--amber-border); font-weight: 500; }
+.formula-strip .label    { color: #a0a090; margin-left: 16px; font-size: 11px; }
+
+/* ── IFRS vs GAAP compare ── */
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.compare-col { border-radius: 10px; padding: 16px; border: 1px solid; }
+.ifrs  { background: var(--teal-light);  border-color: var(--teal-border); }
+.gaap  { background: var(--amber-light); border-color: var(--amber-border); }
+.compare-label {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.ifrs .compare-label  { color: var(--teal-mid); }
+.gaap .compare-label  { color: var(--amber-mid); }
+.compare-item { font-size: 13px; line-height: 1.9; }
+.ifrs .compare-item  { color: var(--teal-dark); }
+.gaap .compare-item  { color: var(--amber-dark); }
+.badge {
+  display: inline-block; font-size: 11px; font-weight: 500;
+  padding: 2px 8px; border-radius: 20px; margin-left: 6px;
+  vertical-align: middle;
+}
+.badge-green { background: var(--teal-light); color: var(--teal-dark); border: 1px solid var(--teal-border); }
+.badge-red   { background: #FCEBEB; color: #791F1F; border: 1px solid #F09595; }
+
+/* ── Decision tree ── */
+.tree { font-size: 13px; background: var(--gray-light); border-radius: 12px; padding: 20px 24px; }
+.tree-q { font-weight: 500; color: var(--ink); }
+.tree-yes { color: var(--teal-mid); padding-left: 20px; }
+.tree-no  { color: var(--ink-muted); padding-left: 20px; }
+.tree-line { line-height: 2.2; }
+.pill {
+  display: inline-block; padding: 1px 10px; border-radius: 20px;
+  font-size: 11px; font-weight: 500; margin-left: 4px;
+}
+.pill-teal   { background: var(--teal-light); color: var(--teal-dark); border: 1px solid var(--teal-border); }
+.pill-amber  { background: var(--amber-light); color: var(--amber-dark); border: 1px solid var(--amber-border); }
+.pill-blue   { background: var(--blue-light); color: var(--blue-dark); border: 1px solid var(--blue-border); }
+.pill-purple { background: var(--purple-light); color: var(--purple-dark); border: 1px solid var(--purple-border); }
+
+/* ── Rule ── */
+hr.divider { border: none; border-top: 1px solid var(--rule); margin: 36px 0; }
+
+/* ── Print ── */
+@media print { body { background: white; padding: 20px; } }
+</style>
+</head>
+<body>
+
+<p class="page-label">CFA Level II · Financial Statement Analysis · Module 1.05</p>
+<h1>Excess Purchase Price,<br>Fair Value Option &amp; Impairment</h1>
+<p class="page-sub">How the premium paid above book value is decomposed, amortized, and tested for impairment under IFRS and US GAAP.</p>
+
+<!-- ════════════════════════════════════════════
+     SECTION 1: Why purchase price exceeds book value
+════════════════════════════════════════════ -->
+<div class="section-header">
+  <span class="section-num">01</span>
+  <span class="section-title">Why purchase price usually exceeds book value</span>
+</div>
+
+<div class="row col-3">
+  <div class="box gray">
+    <div class="box-title">Assets at historical cost</div>
+    <div class="box-sub">Book value reflects what the investee originally paid for assets — not today's market value. Especially true for PP&amp;E and intangibles.</div>
+  </div>
+  <div class="box gray">
+    <div class="box-title">Unrecorded intangibles</div>
+    <div class="box-sub">Brands, customer relationships, patents, and proprietary technology often have zero book value but substantial real worth.</div>
+  </div>
+  <div class="box gray">
+    <div class="box-title">Goodwill and synergies</div>
+    <div class="box-sub">The buyer may pay a premium for expected synergies, market position, or future earnings potential that isn't on any balance sheet.</div>
+  </div>
+</div>
+
+<div style="margin-top: 10px;">
+  <div class="banner">
+    <div class="box-title">IFRS vs US GAAP: PP&amp;E measurement</div>
+    <div class="box-sub">IFRS allows companies to carry PP&amp;E at either historical cost or fair value (revaluation model). US GAAP requires historical cost only. This means the gap between purchase price and book value is often larger for US GAAP investees.</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 2: Decomposing the excess purchase price
+════════════════════════════════════════════ -->
+<hr class="divider">
+<div class="section-header">
+  <span class="section-num">02</span>
+  <span class="section-title">Decomposing the excess purchase price</span>
+</div>
+
+<div class="row col-2" style="margin-bottom:6px">
+  <div class="box teal">
+    <div class="box-title">Purchase price paid</div>
+    <div class="box-sub">Total cost to acquire the stake</div>
+  </div>
+  <div class="box gray">
+    <div class="box-title">Investor's share of book value</div>
+    <div class="box-sub">Ownership % × investee's net assets at book value</div>
+  </div>
+</div>
+
+<div style="text-align:center; font-size:20px; color:var(--ink-muted); margin: 2px 0;">↓</div>
+
+<div class="row" style="margin-bottom:6px">
+  <div class="box amber">
+    <div class="box-title">Excess purchase price</div>
+    <div class="box-sub">Purchase price minus investor's share of book value. This total gets split into two buckets below.</div>
+  </div>
+</div>
+
+<div style="display:flex; justify-content:space-around; margin: 2px 0;">
+  <div style="text-align:center; font-size:20px; color:var(--ink-muted);">↙</div>
+  <div style="text-align:center; font-size:20px; color:var(--ink-muted);">↘</div>
+</div>
+
+<div class="row col-2" style="margin-bottom:6px">
+  <div class="box teal">
+    <div class="box-title">FV adjustments to identifiable assets</div>
+    <div class="box-sub">Allocated to specific assets (PP&amp;E, inventory, intangibles, land) based on fair value minus book value × ownership %. Amortized over useful life.</div>
+  </div>
+  <div class="box purple">
+    <div class="box-title">Goodwill — residual</div>
+    <div class="box-sub">Whatever remains after allocating to all identifiable assets. Not amortized. Tested for impairment. Included in carrying value of the investment (not a separate line).</div>
+  </div>
+</div>
+
+<div style="text-align:center; font-size:20px; color:var(--ink-muted); margin: 2px 0;">↓ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↓</div>
+
+<div class="row col-2">
+  <div class="box teal">
+    <div class="box-title">Amortized over useful life</div>
+    <div class="box-sub">Reduces equity income and carrying value each period. Land: indefinite → no amortization. Inventory: expensed when sold.</div>
+  </div>
+  <div class="box purple">
+    <div class="box-title">Not amortized — indefinite life</div>
+    <div class="box-sub">Reviewed for impairment. Written down if impaired. Impairment loss on income statement; carrying value reduced.</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 3: How amortization affects the investment account
+════════════════════════════════════════════ -->
+<hr class="divider">
+<div class="section-header">
+  <span class="section-num">03</span>
+  <span class="section-title">How amortization flows through the investment account</span>
+</div>
+
+<div class="formula-strip">
+  <div><span class="op-eq">=</span> Starting investment balance (cost) <span class="label">recorded at acquisition</span></div>
+  <div><span class="op-plus">+</span> Investor's share of investee net income <span class="label">equity income line</span></div>
+  <div><span class="op-minus">−</span> Dividends received <span class="label">return of capital, not income</span></div>
+  <div><span class="op-minus">−</span> Amortization of FV premium <span class="label">investor records privately; not on investee's books</span></div>
+  <div><span class="op-eq">=</span> Ending carrying value of investment
+  </div>
+</div>
+
+<div style="margin-top:10px;" class="banner">
+  <div class="box-title">Alternative view of the carrying value at any point in time</div>
+  <div class="box-sub">
+    Carrying value = (Ownership % × investee's net assets at <em>book value</em>) + unamortized excess purchase price<br>
+    As years pass and FV premiums amortize, the carrying value converges toward the pure book value proportion. Goodwill stays in the unamortized balance indefinitely (until impaired).
+  </div>
+</div>
+
+<!-- Worked example 1: Blake / Brown -->
+<div class="example-card" style="margin-top:20px;">
+  <div class="example-header">
+    <div>
+      <div class="example-label">Worked example 1</div>
+      <div class="example-name">Blake Co. acquires 30% of Brown Co. — calculating goodwill</div>
+    </div>
+  </div>
+  <div class="example-body">
+    <table>
+      <thead>
+        <tr><th>Item</th><th>Book value</th><th>Fair value</th><th>Difference</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Current assets</td><td>€10,000</td><td>€10,000</td><td>€0</td></tr>
+        <tr><td>Plant and equipment</td><td>€190,000</td><td>€220,000</td><td>€30,000</td></tr>
+        <tr><td>Land</td><td>€120,000</td><td>€140,000</td><td>€20,000</td></tr>
+        <tr><td>Liabilities</td><td>€100,000</td><td>€100,000</td><td>€0</td></tr>
+        <tr><td><strong>Net assets</strong></td><td><strong>€220,000</strong></td><td><strong>€270,000</strong></td><td><strong>€50,000</strong></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:16px;">
+      <table>
+        <thead><tr><th>Goodwill calculation</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>Purchase price paid</td><td class="formula-mono">€100,000</td></tr>
+          <tr><td>Investor's share of book value (30% × €220,000)</td><td class="formula-mono">€66,000</td></tr>
+          <tr><td>Excess purchase price</td><td class="formula-mono">€34,000</td></tr>
+          <tr><td>Attributable to identifiable net assets (30% × €50,000)</td><td class="formula-mono">€15,000</td></tr>
+          <tr class="total-row"><td>Goodwill (residual)</td><td class="formula-mono">€19,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:14px;">
+      <table>
+        <thead><tr><th>Account</th><th>Excess (€)</th><th>Useful life</th><th>Amortization/year (€)</th></tr></thead>
+        <tbody>
+          <tr><td>Plant and equipment</td><td>€9,000</td><td>10 years</td><td>€900</td></tr>
+          <tr><td>Land</td><td>€6,000</td><td>Indefinite</td><td>€0</td></tr>
+          <tr><td>Goodwill</td><td>€19,000</td><td>Indefinite</td><td>€0</td></tr>
+          <tr class="total-row"><td>Total annual amortization</td><td></td><td></td><td>€900</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Worked example 2: Parker / Prince -->
+<div class="example-card" style="margin-top:16px;">
+  <div class="example-header">
+    <div>
+      <div class="example-label">Worked example 2</div>
+      <div class="example-name">Parker Co. acquires 30% of Prince Inc. — full investment account calculation</div>
+    </div>
+  </div>
+  <div class="example-body">
+    <table>
+      <thead>
+        <tr><th>Prince Inc.</th><th>Book value</th><th>Fair value</th><th>Difference</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Current assets</td><td>€100,000</td><td>€100,000</td><td>€0</td></tr>
+        <tr><td>Plant and equipment</td><td>€1,900,000</td><td>€2,200,000</td><td>€300,000</td></tr>
+        <tr><td>Liabilities</td><td>€800,000</td><td>€800,000</td><td>€0</td></tr>
+        <tr><td><strong>Net assets</strong></td><td><strong>€1,200,000</strong></td><td><strong>€1,500,000</strong></td><td><strong>€300,000</strong></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:16px; display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <table>
+        <thead><tr><th colspan="2">Step 1 — Goodwill</th></tr></thead>
+        <tbody>
+          <tr><td>Purchase price</td><td class="formula-mono">€500,000</td></tr>
+          <tr><td>Share of book value (30% × €1,200,000)</td><td class="formula-mono">€360,000</td></tr>
+          <tr><td>Excess purchase price</td><td class="formula-mono">€140,000</td></tr>
+          <tr><td>To PP&amp;E (30% × €300,000)</td><td class="formula-mono">€90,000</td></tr>
+          <tr class="total-row"><td>Goodwill</td><td class="formula-mono">€50,000</td></tr>
+        </tbody>
+      </table>
+      <table>
+        <thead><tr><th colspan="2">Step 2 — Year-end carrying value</th></tr></thead>
+        <tbody>
+          <tr><td>Purchase price</td><td class="formula-mono">€500,000</td></tr>
+          <tr><td>Share of net income (30% × €100,000)</td><td class="formula-mono">+€30,000</td></tr>
+          <tr><td>Dividends received (30% × €50,000)</td><td class="formula-mono">−€15,000</td></tr>
+          <tr><td>PP&amp;E amortization (€90,000 ÷ 10)</td><td class="formula-mono">−€9,000</td></tr>
+          <tr class="total-row"><td>Carrying value (31 Dec 2018)</td><td class="formula-mono">€506,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top: 14px;">
+      <div class="banner">
+        <div class="box-title">Alternative check on the carrying value</div>
+        <div class="box-sub">
+          Prince's ending net assets = €1,200,000 + €100,000 − €50,000 = €1,250,000<br>
+          Parker's share (30%) = €375,000<br>
+          + Unamortized excess purchase price = €140,000 − €9,000 = €131,000<br>
+          <strong>= €506,000 ✓</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 4: Fair value option
+════════════════════════════════════════════ -->
+<hr class="divider">
+<div class="section-header">
+  <span class="section-num">04</span>
+  <span class="section-title">Fair value option</span>
+</div>
+
+<div class="row col-3">
+  <div class="box blue">
+    <div class="box-title">Irrevocable election</div>
+    <div class="box-sub">Must be chosen at initial recognition. Cannot switch back to the equity method later.</div>
+  </div>
+  <div class="box blue">
+    <div class="box-title">Unrealized gains and losses</div>
+    <div class="box-sub">Changes in fair value plus interest and dividends all flow through the income statement each period.</div>
+  </div>
+  <div class="box blue">
+    <div class="box-title">No amortization, no goodwill</div>
+    <div class="box-sub">The entire complexity of excess purchase price allocation disappears. Investment is simply marked to market.</div>
+  </div>
+</div>
+
+<div style="margin-top:10px;" class="compare-grid">
+  <div class="compare-col ifrs">
+    <div class="compare-label">IFRS</div>
+    <div class="compare-item">
+      Available only to:<br>
+      · Venture capital organizations<br>
+      · Mutual funds<br>
+      · Unit trusts<br>
+      · Investment-linked insurance funds<br>
+      <br>
+      <strong>Heavily restricted</strong>
+    </div>
+  </div>
+  <div class="compare-col gaap">
+    <div class="compare-label">US GAAP</div>
+    <div class="compare-item">
+      Available to:<br>
+      · All entities<br>
+      · No restrictions on entity type<br>
+      <br>
+      <br>
+      <strong>Available to everyone</strong>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 5: Impairment
+════════════════════════════════════════════ -->
+<hr class="divider">
+<div class="section-header">
+  <span class="section-num">05</span>
+  <span class="section-title">Impairment of equity method investments</span>
+</div>
+
+<div class="row" style="margin-bottom:10px;">
+  <div class="box amber">
+    <div class="box-title">Trigger (both IFRS and US GAAP)</div>
+    <div class="box-sub">Fair value of the investment falls below its carrying value and the decline is considered other than temporary (US GAAP) or is supported by objective evidence of a loss event (IFRS).</div>
+  </div>
+</div>
+
+<div style="text-align:center; font-size:20px; color:var(--ink-muted); margin: 2px 0;">↓</div>
+
+<div class="row col-2">
+  <div class="box teal">
+    <div class="box-title">IFRS — recoverable amount test</div>
+    <div class="box-sub" style="line-height:1.9;">
+      Compare carrying value to recoverable amount<br>
+      (higher of value in use or fair value less costs to sell)<br><br>
+      Impairment loss → income statement<br>
+      Carrying value reduced directly or via allowance<br><br>
+      <strong>Goodwill tested as part of total investment — not separately</strong><br><br>
+      Reversal permitted <span class="badge badge-green">↑ allowed</span> if recoverable amount later increases
+    </div>
+  </div>
+  <div class="box amber">
+    <div class="box-title">US GAAP — permanent decline test</div>
+    <div class="box-sub" style="line-height:1.9;">
+      If decline is determined to be permanent:<br>
+      impairment loss recognized on income statement<br>
+      Carrying value written down to fair value<br><br>
+      <strong>No separate goodwill test — whole investment tested</strong><br><br>
+      <br>
+      Reversal prohibited <span class="badge badge-red">↓ not allowed</span> even if fair value recovers
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:10px;" class="banner">
+  <div class="box-title">Key exam distinction — impairment reversal</div>
+  <div class="box-sub">
+    IFRS permits reversal of a prior impairment if the investment's recoverable amount subsequently increases — the carrying value is written back up, capped at what it would have been had no impairment been recognized.<br>
+    US GAAP prohibits any reversal. Once impaired, the new lower carrying value becomes the new cost basis. This is a reliable exam differentiator.
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 6: Full comparison table
+════════════════════════════════════════════ -->
+<hr class="divider">
+<div class="section-header">
+  <span class="section-num">06</span>
+  <span class="section-title">IFRS vs US GAAP — full comparison</span>
+</div>
+
+<table>
+  <thead>
+    <tr><th>Topic</th><th>IFRS</th><th>US GAAP</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PP&amp;E measurement at investee</td>
+      <td>Historical cost or fair value (revaluation model)</td>
+      <td>Historical cost only</td>
+    </tr>
+    <tr>
+      <td>Excess purchase price allocation</td>
+      <td>Allocated to specific assets; remainder = goodwill</td>
+      <td>Same</td>
+    </tr>
+    <tr>
+      <td>Goodwill amortization</td>
+      <td>Not amortized — tested for impairment</td>
+      <td>Same</td>
+    </tr>
+    <tr>
+      <td>Where goodwill appears</td>
+      <td>Inside investment carrying value, not separate</td>
+      <td>Same</td>
+    </tr>
+    <tr>
+      <td>Fair value option availability</td>
+      <td>VC organizations, funds, unit trusts only</td>
+      <td>All entities</td>
+    </tr>
+    <tr>
+      <td>Impairment trigger</td>
+      <td>Objective evidence of loss event</td>
+      <td>Decline determined to be permanent</td>
+    </tr>
+    <tr>
+      <td>Impairment reversal</td>
+      <td>Permitted (capped at original carrying value)</td>
+      <td>Prohibited</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ════════════════════════════════════════════
+     SECTION 7: Decision tree
+════════════════════════════════════════════ -->
+<hr class="divider">
+<div class="section-header">
+  <span class="section-num">07</span>
+  <span class="section-title">Decision tree — handling excess purchase price</span>
+</div>
+
+<div class="tree">
+  <div class="tree-line"><span class="tree-q">Did investor pay more than their share of the investee's book value?</span></div>
+  <div class="tree-line" style="padding-left:20px;"><span style="color:var(--teal-mid)">↳ Yes ↓</span></div>
+
+  <div class="tree-line" style="padding-left:20px; margin-top:4px;"><span class="tree-q">Can the excess be attributed to specific identifiable assets?</span></div>
+  <div class="tree-line" style="padding-left:40px;"><span style="color:var(--teal-mid)">↳ Yes →</span> Allocate to those assets (PP&amp;E, intangibles, inventory) <span class="pill pill-teal">amortize over useful life</span></div>
+  <div class="tree-line" style="padding-left:40px;"><span style="color:var(--ink-muted)">↳ Remainder → </span><span class="pill pill-purple">goodwill — not amortized</span></div>
+
+  <div class="tree-line" style="padding-left:20px; margin-top:8px;"><span class="tree-q">Did investor elect the fair value option at inception?</span></div>
+  <div class="tree-line" style="padding-left:40px;"><span style="color:var(--teal-mid)">↳ Yes →</span> No allocation, no amortization, no goodwill <span class="pill pill-blue">mark to market each period</span></div>
+  <div class="tree-line" style="padding-left:40px;"><span style="color:var(--ink-muted)">↳ No → </span> Use equity method with amortization adjustments</div>
+
+  <div class="tree-line" style="padding-left:20px; margin-top:8px;"><span class="tree-q">Has investment value declined below carrying value?</span></div>
+  <div class="tree-line" style="padding-left:40px;"><span style="color:var(--teal-mid)">↳ IFRS:</span> Test recoverable amount → recognize loss → <span class="pill pill-teal">reversal allowed</span></div>
+  <div class="tree-line" style="padding-left:40px;"><span style="color:var(--amber-mid)">↳ GAAP:</span> If permanent decline → recognize loss → <span class="pill pill-amber">no reversal</span></div>
+</div>
+
+<p style="font-size: 12px; color: var(--ink-muted); margin-top: 36px; padding-top: 16px; border-top: 1px solid var(--rule);">
+  CFA Level II · Financial Statement Analysis · Module 1.05 · Excess Purchase Price, Fair Value Option &amp; Impairment
+</p>
+
+</body>
+</html>
