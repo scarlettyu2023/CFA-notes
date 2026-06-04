@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intercorporate Investments — CFA Level II</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f9f9f7; color: #1a1a18; padding: 40px 32px; max-width: 860px; margin: 0 auto; line-height: 1.6; }
+  h1 { font-size: 22px; font-weight: 500; margin-bottom: 6px; }
+  h2 { font-size: 16px; font-weight: 500; margin: 32px 0 14px; color: #1a1a18; }
+  .subtitle { font-size: 13px; color: #888780; margin-bottom: 32px; }
+  .divider { border: none; border-top: 0.5px solid #d3d1c7; margin: 32px 0; }
+
+  /* Spectrum bar */
+  .spectrum-wrap { margin-bottom: 8px; }
+  .spectrum-bar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; width: 100%; }
+  .seg-blue   { background: #B5D4F4; flex: 20; }
+  .seg-teal   { background: #9FE1CB; flex: 30; }
+  .seg-green  { background: #C0DD97; flex: 10; }
+  .seg-amber  { background: #FAC775; flex: 40; }
+  .spectrum-labels { display: flex; justify-content: space-between; font-size: 12px; color: #888780; margin-top: 5px; }
+
+  /* Box grid rows */
+  .row { display: grid; gap: 10px; margin-bottom: 10px; }
+  .row-4 { grid-template-columns: 20fr 30fr 10fr 40fr; }
+  .row-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .row-2 { grid-template-columns: 1fr 1fr; }
+  .row-full { grid-template-columns: 1fr; }
+
+  .box {
+    border-radius: 12px;
+    padding: 12px 16px;
+    border: 1px solid;
+  }
+  .box-title { font-size: 14px; font-weight: 500; }
+  .box-sub   { font-size: 12px; margin-top: 3px; }
+
+  /* Color variants — light bg, colored border, colored text */
+  .blue  { background: #E6F1FB; border-color: #85B7EB; }
+  .blue  .box-title { color: #0C447C; }
+  .blue  .box-sub   { color: #185FA5; }
+
+  .teal  { background: #E1F5EE; border-color: #5DCAA5; }
+  .teal  .box-title { color: #085041; }
+  .teal  .box-sub   { color: #0F6E56; }
+
+  .green { background: #EAF3DE; border-color: #97C459; }
+  .green .box-title { color: #27500A; }
+  .green .box-sub   { color: #3B6D11; }
+
+  .amber { background: #FAEEDA; border-color: #EF9F27; }
+  .amber .box-title { color: #633806; }
+  .amber .box-sub   { color: #854F0B; }
+
+  .gray  { background: #F1EFE8; border-color: #B4B2A9; }
+  .gray  .box-title { color: #444441; }
+  .gray  .box-sub   { color: #5F5E5A; }
+
+  .purple { background: #EEEDFE; border-color: #AFA9EC; }
+  .purple .box-title { color: #3C3489; }
+  .purple .box-sub   { color: #534AB7; }
+
+  /* Wide info banner */
+  .banner {
+    border-radius: 12px; padding: 14px 18px;
+    border: 1px solid #B4B2A9; background: #F1EFE8;
+  }
+  .banner .box-title { color: #444441; font-size: 14px; font-weight: 500; }
+  .banner .box-sub   { color: #5F5E5A; font-size: 12px; margin-top: 4px; }
+
+  /* Arrow between row pairs */
+  .arrow-row { display: grid; gap: 10px; margin-bottom: 2px; }
+  .arrow-cell { text-align: center; font-size: 14px; color: #888780; line-height: 1; }
+
+  /* Comparison table */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+  th { background: #F1EFE8; font-weight: 500; padding: 9px 12px; text-align: left; border: 0.5px solid #d3d1c7; color: #444441; }
+  td { padding: 8px 12px; border: 0.5px solid #d3d1c7; color: #3d3d3a; vertical-align: top; }
+  tr:nth-child(even) td { background: #f9f9f7; }
+
+  /* Decision tree */
+  .tree { font-size: 13px; line-height: 2.2; }
+  .tree-line { display: flex; align-items: baseline; gap: 8px; }
+  .tree-indent-1 { padding-left: 24px; }
+  .tree-indent-2 { padding-left: 48px; }
+  .tree-indent-3 { padding-left: 72px; }
+  .tree-indent-4 { padding-left: 96px; }
+  .tree-indent-5 { padding-left: 120px; }
+  .q  { color: #1a1a18; font-weight: 500; }
+  .yes { color: #0F6E56; }
+  .no  { color: #888780; }
+  .result { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; margin-left: 6px; }
+  .r-amber  { background: #FAEEDA; color: #633806; border: 1px solid #EF9F27; }
+  .r-teal   { background: #E1F5EE; color: #085041; border: 1px solid #5DCAA5; }
+  .r-blue   { background: #E6F1FB; color: #0C447C; border: 1px solid #85B7EB; }
+  .r-gray   { background: #F1EFE8; color: #444441; border: 1px solid #B4B2A9; }
+
+  /* Equity method calc */
+  .calc-table { width: 100%; font-size: 13px; border-collapse: collapse; }
+  .calc-table td { padding: 6px 10px; border-bottom: 0.5px solid #d3d1c7; }
+  .calc-table td:last-child { text-align: right; font-family: "SF Mono", "Fira Code", monospace; color: #444441; }
+  .calc-table .total td { font-weight: 500; border-top: 1px solid #B4B2A9; }
+  .calc-table .label { color: #5F5E5A; }
+
+  @media print {
+    body { background: white; padding: 20px; }
+    h2 { page-break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Intercorporate investments</h1>
+<p class="subtitle">CFA Level II · Financial Statement Analysis · Module 1.04</p>
+
+<!-- ─── Section 1: Spectrum ─── -->
+<h2>1. Ownership % determines the accounting method</h2>
+<div class="spectrum-wrap">
+  <div class="spectrum-bar">
+    <div class="seg-blue"></div>
+    <div class="seg-teal"></div>
+    <div class="seg-green"></div>
+    <div class="seg-amber"></div>
+  </div>
+  <div class="spectrum-labels">
+    <span>0%</span><span>~20%</span><span>~50%</span><span>50–100%</span><span>100%</span>
+  </div>
+</div>
+
+<div class="row row-4" style="margin-top:14px">
+  <div class="box blue">
+    <div class="box-title">Financial assets</div>
+    <div class="box-sub">&lt;20% ownership</div>
+  </div>
+  <div class="box teal">
+    <div class="box-title">Associates</div>
+    <div class="box-sub">Significant influence, ~20–50%</div>
+  </div>
+  <div class="box green">
+    <div class="box-title">Joint ventures</div>
+    <div class="box-sub">Shared control</div>
+  </div>
+  <div class="box amber">
+    <div class="box-title">Business combinations</div>
+    <div class="box-sub">Control, &gt;50%</div>
+  </div>
+</div>
+
+<div class="arrow-row row-4">
+  <div class="arrow-cell">↓</div>
+  <div class="arrow-cell">↓</div>
+  <div class="arrow-cell">↓</div>
+  <div class="arrow-cell">↓</div>
+</div>
+
+<div class="row row-4">
+  <div class="box blue">
+    <div class="box-title">Fair value or amortized cost</div>
+    <div class="box-sub">FVTPL / FVOCI / AC</div>
+  </div>
+  <div class="box teal">
+    <div class="box-title">Equity method</div>
+    <div class="box-sub">One-line consolidation. Same under IFRS and GAAP</div>
+  </div>
+  <div class="box green">
+    <div class="box-title">Equity method</div>
+    <div class="box-sub">Proportionate consolidation rarely allowed</div>
+  </div>
+  <div class="box amber">
+    <div class="box-title">Full consolidation</div>
+    <div class="box-sub">Acquisition method. IFRS and GAAP aligned</div>
+  </div>
+</div>
+
+<div style="margin-top: 10px;">
+  <div class="banner">
+    <div class="box-title">Special purpose entities (SPEs) and variable interest entities (VIEs)</div>
+    <div class="box-sub">Consolidated when you are the primary beneficiary — regardless of ownership %</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ─── Section 2: Financial assets ─── -->
+<h2>2. Financial asset categories (when ownership &lt; 20%)</h2>
+
+<div class="row row-3">
+  <div class="box blue">
+    <div class="box-title">FVTPL</div>
+    <div class="box-sub">Fair value through profit & loss. Gains/losses → income statement. Default category.</div>
+  </div>
+  <div class="box blue">
+    <div class="box-title">FVOCI</div>
+    <div class="box-sub">Fair value through OCI. Gains/losses → equity only. Irrevocable election for equity instruments.</div>
+  </div>
+  <div class="box blue">
+    <div class="box-title">Amortized cost</div>
+    <div class="box-sub">Debt only. Held to collect contractual cash flows. No mark-to-market.</div>
+  </div>
+</div>
+
+<div style="margin-top: 10px;">
+  <div class="banner">
+    <div class="box-title">IFRS 9 uses a two-part test to assign category</div>
+    <div class="box-sub">① Business model test — is the asset held to collect, to sell, or both? &nbsp;·&nbsp; ② Cash flow characteristics test — are CFs solely payments of principal and interest? &nbsp;·&nbsp; US GAAP (ASC 320/321) uses similar but differently named categories.</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ─── Section 3: Equity method ─── -->
+<h2>3. Equity method mechanics</h2>
+
+<div class="row row-2">
+  <div class="box teal">
+    <div class="box-title">Balance sheet — 1 line</div>
+    <div class="box-sub">"Investment in associate"<br>= carrying value of net interest</div>
+  </div>
+  <div class="box teal">
+    <div class="box-title">Income statement — 1 line</div>
+    <div class="box-sub">"Equity income in associate"<br>= your % share of net profit</div>
+  </div>
+</div>
+
+<div style="margin-top: 10px;">
+  <div class="banner">
+    <div class="box-title">How the carrying value moves each period</div>
+    <div class="box-sub" style="margin-top: 8px; line-height: 2;">
+      <span style="display:inline-block; min-width: 24px; text-align:center; color:#0F6E56; font-weight:500;">+</span> Initial cost at acquisition<br>
+      <span style="display:inline-block; min-width: 24px; text-align:center; color:#0F6E56; font-weight:500;">+</span> Your share of investee net income<br>
+      <span style="display:inline-block; min-width: 24px; text-align:center; color:#A32D2D; font-weight:500;">−</span> Your share of investee net losses<br>
+      <span style="display:inline-block; min-width: 24px; text-align:center; color:#A32D2D; font-weight:500;">−</span> Dividends received (return of capital, NOT income)<br>
+      <span style="display:inline-block; min-width: 24px; text-align:center; color: #444;">±</span> Your share of investee OCI items<br>
+      <span style="display:inline-block; min-width: 24px; text-align:center; color: #444;">=</span> Ending carrying value
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 10px;">
+  <div class="box gray">
+    <div class="box-title">Two special rules to remember</div>
+    <div class="box-sub" style="margin-top:6px; line-height: 1.9;">
+      <b style="color:#444441">If value reaches zero:</b> stop recording losses. Resume only after unrecognized losses are fully recovered from future profits.<br>
+      <b style="color:#444441">Dividends:</b> reduce carrying value — they are NOT recognized as income.
+    </div>
+  </div>
+</div>
+
+<h2 style="margin-top: 24px;">Worked example — Branch owns 20% of Williams</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Year</th>
+      <th>Williams net income</th>
+      <th>Equity income (20%)</th>
+      <th>Williams dividends</th>
+      <th>Dividends received (20%)</th>
+      <th>Net change</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Start</td><td>—</td><td>—</td><td>—</td><td>—</td><td style="font-weight:500; color:#0C447C">€200,000 (cost)</td></tr>
+    <tr><td>2016</td><td>€200,000</td><td>+€40,000</td><td>€50,000</td><td>−€10,000</td><td>+€30,000</td></tr>
+    <tr><td>2017</td><td>€300,000</td><td>+€60,000</td><td>€100,000</td><td>−€20,000</td><td>+€40,000</td></tr>
+    <tr><td>2018</td><td>€400,000</td><td>+€80,000</td><td>€200,000</td><td>−€40,000</td><td>+€40,000</td></tr>
+    <tr style="font-weight:500; background:#E1F5EE">
+      <td colspan="5" style="color:#085041">Final carrying value (end 2018)</td>
+      <td style="color:#085041">€310,000</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr class="divider">
+
+<!-- ─── Section 4: JV comparison ─── -->
+<h2>4. Equity method vs proportionate consolidation (joint ventures)</h2>
+
+<div class="row row-2">
+  <div class="box teal">
+    <div class="box-title">Equity method (required)</div>
+    <div class="box-sub" style="line-height: 1.9; margin-top: 6px;">
+      B/S: one line — "investment in JV"<br>
+      I/S: one line — "equity income in JV"<br>
+      Total assets: <b style="color:#085041">lower</b><br>
+      Total debt: <b style="color:#085041">lower</b><br>
+      Revenue: <b style="color:#085041">lower</b><br>
+      Net income: same as prop. consolidation<br>
+      Net assets: same as prop. consolidation
+    </div>
+  </div>
+  <div class="box gray">
+    <div class="box-title">Proportionate consolidation (rare exception)</div>
+    <div class="box-sub" style="line-height: 1.9; margin-top: 6px;">
+      B/S: your % of each asset and liability<br>
+      I/S: your % of each revenue and expense<br>
+      Total assets: <b style="color:#A32D2D">higher</b><br>
+      Total debt: <b style="color:#A32D2D">higher</b><br>
+      Revenue: <b style="color:#A32D2D">higher</b><br>
+      Net income: same as equity method<br>
+      Net assets: same as equity method
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 10px;">
+  <div class="banner">
+    <div class="box-title">Key insight for the exam</div>
+    <div class="box-sub">Net income and net assets are identical under both methods. The difference is in gross presentation — which changes leverage, asset turnover, and margin ratios even though the underlying economics are the same.</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ─── Section 5: Full consolidation ─── -->
+<h2>5. Business combinations — full consolidation</h2>
+
+<div class="row row-3">
+  <div class="box amber">
+    <div class="box-title">Acquisition method</div>
+    <div class="box-sub">Required under both IFRS 3 and ASC 805. Assets and liabilities recorded at fair value on acquisition date.</div>
+  </div>
+  <div class="box amber">
+    <div class="box-title">Goodwill</div>
+    <div class="box-sub">Purchase price minus fair value of net assets acquired. Tested for impairment annually — never amortized.</div>
+  </div>
+  <div class="box amber">
+    <div class="box-title">Non-controlling interest (NCI)</div>
+    <div class="box-sub">The portion of subsidiary equity not owned by parent. Shown separately in consolidated equity.</div>
+  </div>
+</div>
+
+<div style="margin-top: 10px;">
+  <div class="box gray">
+    <div class="box-title">IFRS vs GAAP difference on goodwill impairment</div>
+    <div class="box-sub">Both test for impairment rather than amortizing. GAAP uses a single-step test; IFRS uses a recoverable amount test. Both are broadly aligned — the frameworks converged here.</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ─── Section 6: SPEs ─── -->
+<h2>6. Special purpose entities and variable interest entities</h2>
+
+<div class="row row-2">
+  <div class="box purple">
+    <div class="box-title">The consolidation trigger</div>
+    <div class="box-sub" style="line-height: 1.8; margin-top:6px;">
+      Not ownership % — it's <b style="color:#3C3489">economic risk and reward</b><br>
+      If you are the primary beneficiary → consolidate<br>
+      Regardless of how small your equity stake is
+    </div>
+  </div>
+  <div class="box purple">
+    <div class="box-title">Common uses</div>
+    <div class="box-sub" style="line-height: 1.8; margin-top:6px;">
+      Securitization of mortgages or receivables<br>
+      Off-balance-sheet financing structures<br>
+      Project finance and leasing vehicles
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ─── Section 7: IFRS vs GAAP ─── -->
+<h2>7. IFRS vs US GAAP — side by side</h2>
+
+<div class="row row-3">
+  <div class="box blue">
+    <div class="box-title">Financial assets</div>
+    <div class="box-sub">IFRS 9 vs ASC 320/321. Similar in spirit, different category names and classification tests.</div>
+  </div>
+  <div class="box teal">
+    <div class="box-title">Associates and JVs</div>
+    <div class="box-sub">Broadly aligned. Both require equity method. IAS 28 (IFRS) vs ASC Topic 323 (GAAP).</div>
+  </div>
+  <div class="box amber">
+    <div class="box-title">Business combinations</div>
+    <div class="box-sub">Largely aligned since 2008 convergence. Goodwill impairment approach differs slightly.</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ─── Section 8: Ratio effects ─── -->
+<h2>8. Why accounting method choice matters for ratios</h2>
+
+<div class="row row-3">
+  <div class="box teal">
+    <div class="box-title">Equity method</div>
+    <div class="box-sub" style="line-height:1.9; margin-top:6px;">
+      Total assets: lower<br>
+      Total debt: lower<br>
+      Revenue: lower<br>
+      Debt/equity: <b style="color:#085041">looks better</b><br>
+      Asset turnover: <b style="color:#085041">looks better</b><br>
+      Net margin: <b style="color:#085041">looks better</b>
+    </div>
+  </div>
+  <div class="box gray">
+    <div class="box-title">Proportionate consolidation</div>
+    <div class="box-sub" style="line-height:1.9; margin-top:6px;">
+      Total assets: higher<br>
+      Total debt: higher<br>
+      Revenue: higher<br>
+      Debt/equity: <b style="color:#A32D2D">looks worse</b><br>
+      Asset turnover: <b style="color:#A32D2D">looks worse</b><br>
+      Net margin: <b style="color:#A32D2D">looks worse</b>
+    </div>
+  </div>
+  <div class="box amber">
+    <div class="box-title">Full consolidation</div>
+    <div class="box-sub" style="line-height:1.9; margin-top:6px;">
+      Total assets: highest<br>
+      Total debt: highest<br>
+      Revenue: highest<br>
+      All ratios reflect full subsidiary<br>
+      NCI shown in equity section<br>
+      &nbsp;
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 10px;">
+  <div class="banner">
+    <div class="box-title">Net income and net assets are the same under equity method and proportionate consolidation</div>
+    <div class="box-sub">The difference is only in gross presentation. Analysts often adjust equity-method financials by grossing up the investee's debt to get a clearer picture of leverage.</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ─── Section 9: Decision tree ─── -->
+<h2>9. Decision tree — which method applies?</h2>
+
+<div style="background: #F9F9F7; border: 0.5px solid #d3d1c7; border-radius: 12px; padding: 20px 24px;">
+  <div class="tree">
+
+    <div class="tree-line"><span class="q">Is there control? (ownership &gt;50% or de facto)</span></div>
+    <div class="tree-line tree-indent-1"><span class="yes">↳ Yes →</span><span class="result r-amber">Full consolidation (acquisition method)</span></div>
+    <div class="tree-line tree-indent-1"><span class="no">↳ No ↓</span></div>
+
+    <div class="tree-line tree-indent-1" style="margin-top:8px"><span class="q">Is it an SPE/VIE and are you the primary beneficiary?</span></div>
+    <div class="tree-line tree-indent-2"><span class="yes">↳ Yes →</span><span class="result r-amber">Full consolidation</span></div>
+    <div class="tree-line tree-indent-2"><span class="no">↳ No ↓</span></div>
+
+    <div class="tree-line tree-indent-2" style="margin-top:8px"><span class="q">Is there joint control with other parties?</span></div>
+    <div class="tree-line tree-indent-3"><span class="yes">↳ Yes →</span><span class="result r-teal">Joint venture → equity method</span></div>
+    <div class="tree-line tree-indent-3"><span class="no">↳ No ↓</span></div>
+
+    <div class="tree-line tree-indent-3" style="margin-top:8px"><span class="q">Is there significant influence? (~20–50%, or demonstrated)</span></div>
+    <div class="tree-line tree-indent-4"><span class="yes">↳ Yes →</span><span class="result r-teal">Associate → equity method</span></div>
+    <div class="tree-line tree-indent-4"><span class="no">↳ No ↓</span></div>
+
+    <div class="tree-line tree-indent-4" style="margin-top:8px"><span class="q">What is the investment type?</span></div>
+    <div class="tree-line tree-indent-5"><span class="yes">Equity instrument →</span><span class="result r-blue">FVTPL or FVOCI election</span></div>
+    <div class="tree-line tree-indent-5"><span class="yes">Debt, held to sell →</span><span class="result r-blue">FVTPL</span></div>
+    <div class="tree-line tree-indent-5"><span class="yes">Debt, held to collect + sell →</span><span class="result r-blue">FVOCI</span></div>
+    <div class="tree-line tree-indent-5"><span class="yes">Debt, held to collect only →</span><span class="result r-gray">Amortized cost</span></div>
+
+  </div>
+</div>
+
+<p style="font-size: 12px; color: #888780; margin-top: 32px; padding-top: 16px; border-top: 0.5px solid #d3d1c7;">CFA Level II · Financial Statement Analysis · Module 1.04 · Intercorporate Investments</p>
+
+</body>
+</html>
