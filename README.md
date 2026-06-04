@@ -4,5 +4,5 @@ Structured study notes for CFA Level II — financial statement analysis, portfo
 
 ### Financial Statement Analysis
 - [1.04 Intercorporate Investments](https://scarlettyu2023.github.io/CFA-notes/Financial-Statement-Analysis/Intercorporate-Investments/intercorporate_investments.html)
-- [1.05 Excess Purchase Price, Fair Value Option & Impairment](https://scarlettyu2023.github.io/CFA-notes/Financial-Statement-Analysis/Intercorporate-Investments/module_1_05.html)
+- [1.05 Excess Purchase Price, Fair Value Option & Impairment](https://scarlettyu2023.github.io/CFA-notes/Financial-Statement-Analysis/Intercorporate-Investments/Amortization_of_Excess_Purchase_Price.html)
 
